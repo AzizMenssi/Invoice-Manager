@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block head %}
+    <title>Add Product</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% endblock %}
+    {% block body %}
+      <div class="container">
+      <br>
+      <br>
+      <form  action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+      	   <aside class="col-sm-4">
+             <div class="card">
+               <article class="card-body">
+                 <h4 class="card-title mb-4 mt-1">Ajouter produit</h4>
+                    <div class="ProductFr">
+                          <div class="form-group">
+                            <label>Designation</label>
+                            <input type="checkbox" id="sameF1" name="sameF1" onchange= "addressFunction()"/>
+                            <input name="P_D_FR" id="P_D_FR" class="form-control" placeholder="" type="text">
+                          </div> <!-- form-group// -->
+                          <div class="form-group">
+                            <label>Prix Unitaire</label>
+                            <input type="checkbox" id="sameF2" name="sameF2" onchange= "addressFunction()"/>
+                            <input name="P_PU_FR" id="P_PU_FR" class="form-control" placeholder="" type="number" step=0.001>
+                          </div> <!-- form-group// -->
+                   </div>
+               </article>
+             </div> <!-- card.// -->
+      	   </aside> <!-- col.// -->
+           <aside class="col-sm-4">
+             <div class="card">
+               <article class="card-body">
+                 <h4 class="card-title mb-4 mt-1">Add a product</h4>
+                    <div class="ProductAn">
+                        <div class="form-group">
+                          <label>Designation</label>
+                          <input name="P_D_EN" id="P_D_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Unit Price</label>
+                          <input name="P_PU_EN" id="P_PU_EN" class="form-control" placeholder="" type="number">
+                        </div> <!-- form-group// -->
+                   </div>
+
+               </article>
+             </div> <!-- card.// -->
+           </aside> <!-- col.// -->
+           <aside class="col-sm-4">
+                <div class="card" align='right'>
+                  <article class="card-body">
+                    <h4 class="card-title mb-4 mt-1">أضف منتج</h4>
+                     <form>
+                          <div class="ProductAr">
+                               <div class="form-group">
+                                 <input type="checkbox" id="sameA1" name="sameA1" onchange= "addressFunction()"/>
+                                 <label>البيان</label>
+                                 <input name="P_D_AR" id="P_D_AR" class="form-control" placeholder="" type="text">
+                               </div> <!-- form-group// -->
+                               <div class="form-group">
+                                 <input type="checkbox" id="sameA2" name="sameA2" onchange= "addressFunction()"/>
+                                 <label>السعر الفردي</label>
+                                 <input name="P_PU_AR" id="P_PU_AR" class="form-control" placeholder="" type="number">
+                               </div> <!-- form-group// -->
+                       </div>
+                  </article>
+                </div> <!-- card.// -->
+           </aside> <!-- col.// -->
+      </div> <!-- row.// -->
+      <br><br>
+      <div>
+        <button type="submit" value="Post" class="btn btn-primary btn-block"  style="width:600px; margin:0 auto;"> Add  </button>
+      </div> <!-- form-group// -->
+      </div>  <!--container end.//-->
+      <br><br><br>
+         <div margin= 0 auto align="center" >
+           <table id="dt-material-checkbox" class="table table-striped" cellspacing="0" width="80%">
+             <thead>
+               <tr>
+                 <th class="th-sm">IdP</th>
+                 <th class="th-sm">Designation_fr</th>
+                 <th class="th-sm">prixU_fr</th>
+                 <th class="th-sm">Designation_an</th>
+                 <th class="th-sm">prixU_an</th>
+                 <th class="th-sm">Designation_ar</th>
+                 <th class="th-sm">prixU_ar</th>
+               </tr>
+             </thead>
+             <tbody>
+               {% for indice in addProductPost %}
+               <tr>
+                 <td>{{ indice.id_c_p}}</td>
+                 <td>{{ indice.designation_fr}}</td>
+                 <td>{{ indice.prix_u_fr}}</td>
+                 <td>{{ indice.designation_an}}</td>
+                 <td>{{ indice.prix_u_an}}</td>
+                 <td>{{ indice.designation_ar}}</td>
+                 <td>{{ indice.prix_u_ar}}</td>
+               </tr>
+               {% endfor %}
+
+             </tbody>
+             <tfoot>
+               <tr>
+                 <th class="th-sm">IdP</th>
+                 <th class="th-sm">Designation_fr</th>
+                 <th class="th-sm">prixU_fr</th>
+                 <th class="th-sm">Designation_an</th>
+                 <th class="th-sm">prixU_an</th>
+                 <th class="th-sm">Designation_ar</th>
+                 <th class="th-sm">prixU_ar</th>
+               </tr>
+             </tfoot>
+             <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+             <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+             <script>
+               $('#dt-material-checkbox').dataTable({
+
+                 columnDefs: [ {
+                 orderable: false,
+                 className: 'select-checkbox',
+                 targets:   0
+             } ],
+             select: {
+                 style:    'os',
+                 selector: 'td:first-child'
+             },
+             order: [[ 1, 'asc' ]]
+             } );
+
+             </script>
+           </table>
+         </div>
+
+      <script>
+      function addressFunction()
+      {
+      if (document.getElementById('sameF1').checked){document.getElementById('P_D_FR').value=document.getElementById('P_D_EN').value;}
+      else{document.getElementById('P_D_FR').value="";}
+      if (document.getElementById('sameF2').checked){document.getElementById('P_PU_FR').value=document.getElementById('P_PU_EN').value;}
+      else{document.getElementById('P_PU_FR').value="";}
+      if (document.getElementById('sameA1').checked){document.getElementById('P_D_AR').value=document.getElementById('P_D_EN').value;}
+      else{document.getElementById('P_D_AR').value="";}
+      if (document.getElementById('sameA2').checked){document.getElementById('P_PU_AR').value=document.getElementById('P_PU_EN').value;}
+      else{document.getElementById('P_PU_AR').value="";}
+
+      }
+      </script>
+    {% endblock %}

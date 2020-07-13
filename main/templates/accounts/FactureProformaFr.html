@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <link href="{% static 'main/Style.css' %}" rel="stylesheet" id="bootstrap-css">
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <title>Facture Pro forma FR</title>
+  </head>
+  <body>
+      <div class="container" style="width:1100px; margin:0 auto;">
+        <div id="invoice">
+          <div class="invoice overflow-auto">
+              <div style="min-width: 600px">
+                <br><br><br><br><br><br>
+                  <header>
+                  </header>
+                  <main>
+                      <div class="row contacts">
+                          <div class="col invoice-to">
+                            {% for indice in ClientsPost %}
+                              <div class="text-gray-light">Facture Pour :</div>
+                              <h2 class="to">{{indice.nom_fr}} {{indice.prenom_fr}}</h2>
+                              <div class="address">{{indice.adresse_fr}}</div>
+                              <div class="email"><a href="mailto:{{indice.email}}">{{indice.email}}</a></div>
+                              {% endfor %}
+                          </div>
+                          <div class="col invoice-details">
+                            {% for indice in FacturesPost %}
+                            <h1 class="invoice-id">Facture Pro forma N° {{ indice.code_date }}/{{ indice.code }}</h1>
+                            <div class="date">Date : {{ indice.date }}</div>
+                            {% endfor %}
+                          </div>
+                      </div>
+                      <table border="0" cellspacing="0" cellpadding="0">
+                          <thead>
+                              <tr>
+                                  <th class="text-center"><h4> Colis  </h4></th>
+                                  <th class="text-center"><h4>Poids en tonne</h4></th>
+                                  <th class="text-center"><h4>DESIGNATION</h4></th>
+                                  <th class="text-center"><h4>Prix Unitaire/T en</h4></th>
+                                  <th class="text-center"><h4>Prix Total en</h4></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            {% for indice in ListProduitsPost %}
+                            {% for ind in ProduitsPost %}
+
+                            {% if forloop.counter == forloop.parentloop.counter %}
+
+                              <tr>
+                                  <td class="Colis" style="text-align:center"><h4>{{indice.collis}}</h4></td>
+                                  <td class="Poids" style="text-align:center"><h4>{{indice.poids|floatformat:3}}</h4></td>
+                                  <td class="Designation" style="text-align:center"><h4>{{ ind.designation_fr }}</h4></td>
+                                  <td class="PrixU" style="text-align:center"><h4>{{ ind.prix_u_fr|floatformat:3}}</h4></td>
+      			                      <td class="PrixT" style="text-align:center"><h4>{{indice.prix_t|floatformat:3}}</h4></td>
+                              </tr>
+                              {% endif %}
+
+                              {% endfor %}
+                              {% endfor %}
+
+                              <tfoot>
+                                {% for indice in FacturesPost %}
+
+                              <tr>
+                                  <td colspan="2"></td>
+                                  <td colspan="2"></td>
+                                  <td></td>
+                              </tr>
+
+                              <tr>
+                                  <td colspan="2"></td>
+                                  <td colspan="2"><h4>TOTAL</h4></td>
+                                  <td><h4>{{indice.prix_t|floatformat:3}}</h4></td>
+                              </tr>
+                          </tfoot>
+                      </table>
+        <div class="Champs">
+        <h4>Arrêtée la présente facture à la somme de : {{indice.prix_t_lettres_fr}}</h4>
+        <h5>Destintation : {{indice.destination}}</h5>
+      	<h5>Mode de Livraison : {{indice.mode_livraison}}</h5>
+      	<h5>Port de chargement : {{indice.port_chargement}}</h5>
+      	<h5>Pays d'origine : {{indice.pays_origine}}</h5>
+      	<h5>Nombre de conteneur : {{indice.nb_conteneur}}</h5>
+      	<h5>Nombre de colis : {{indice.nb_colis}} colis</h5>
+      	<h5>Poids Net : {{indice.poids_net|floatformat:3}} kg</h5>
+      	<h5>Poids Brut : {{indice.poids_brut|floatformat:3}} kg</h5>
+      	<h5>NGP : {{indice.ngp}}</h5>
+      	<h5>Mode de Paiement : {{indice.mode_paiement}}</h5>
+        {% endfor %}
+        {% for indice in CompteBancairesPost %}
+      	<h5>Coordonnées Bancaires</h5>
+      	<h5>Numero de compte : {{indice.num_b_fr}}</h5>
+      	<h5>Adresse Bancaire : {{indice.adresse_b_fr}}</h5>
+      	<h5>Code Swift : {{indice.code_s_fr}}</h5>
+        {% endfor %}
+        {% for indice in FacturesPost %}
+        <h5>{{indice.o_t_fr}}  {{indice.o_c_fr}}</h5>
+        <h5>{{indice.os_t_fr}}  {{indice.os_c_fr}}</h5>
+        <h5>{{indice.ot_t_an}}  {{indice.ot_c_an}}</h5>
+        {% endfor %}
+      </div>
+      <header>
+      </header>
+      <h5 align='right'>La Direction Export</h5>
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <style type="text/css" media="print">
+        @media print {
+          #printPageButton {
+            display: none;
+          }
+        }
+      </style>
+      <div>
+        <button type="submit" value="Post" class="btn btn-primary btn-block" id="printPageButton" onClick="window.print();" style="width: 400px; margin: 0 auto;"> Imprimer </button>
+      </div> <!-- form-group// -->
+    </main>
+      </div>
+  </body>
+</html>

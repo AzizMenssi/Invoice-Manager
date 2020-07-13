@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+
+    {% block head %}
+    <title>Base</title>
+    {% endblock %}
+  </head>
+  {% if user.is_authenticated %}
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{% url 'main:HomeView' %}">Gestionnaire de factures</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav menu ">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'main:InvoiceRegisterView' %}">Passer une commande <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'main:AddClientView' %}">Ajouter un client</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'main:AddProductView' %}">Ajouter un produit</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'main:AddBankAccountView' %}">Ajouter un compte bancaire</a>
+        </li>
+      </ul>
+
+        <ul class="nav navbar-nav menu ml-auto">
+
+        <li class="nav-item ml-auto">
+          <a class="nav-link" href="{% url 'admin:index' %}">Utilisateur actuel : {{ user.username }} </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<style>
+.navbar navbar-default {
+background-color: black;
+color: green;
+}
+</style>
+{% block body %}
+{% endblock %}
+{% else %}
+{% include 'accounts/Logout.html' %}
+{% endif %}
+
+  </body>
+</html>

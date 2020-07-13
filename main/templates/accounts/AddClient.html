@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block head %}
+    <title>Add Client</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% endblock %}
+    {% block body %}
+      <div class="container">
+      <br>
+      <br>
+      <form  action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <aside class="col-sm-4">
+            <div class="card">
+              <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Ajouter un client</h4>
+                   <div class="ClientFr">
+                       <div class="form-group">
+                         <label>Nom</label>
+                         <input type="checkbox" id="sameF1" name="sameF1" onchange= "addressFunction()"/>
+                         <input name="C_N_FR" id="C_N_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                       <div class="form-group">
+                         <label>Adresse</label>
+                         <input type="checkbox" id="sameF2" name="sameF2" onchange= "addressFunction()"/>
+                         <input name="C_A_FR" id="C_A_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                       <div class="form-group">
+                         <label>Email</label>
+                         <input type="checkbox" id="sameF3" name="sameF3" onchange= "addressFunction()"/>
+                         <input name="C_E_FR" id="C_E_FR" class="form-control" placeholder="" type="email">
+                       </div> <!-- form-group// -->
+                       <div class="form-group">
+                         <label>Numero de télephone</label>
+                         <input type="checkbox" id="sameF4" name="sameF4" onchange= "addressFunction()"/>
+                         <input name="C_PN_FR" id="C_PN_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                  </div>
+              </article>
+            </div> <!-- card.// -->
+          </aside> <!-- col.// -->
+      	   <aside class="col-sm-4">
+             <div class="card">
+               <article class="card-body">
+                 <h4 class="card-title mb-4 mt-1">Add a client</h4>
+                    <div class="ClientAn">
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input name="C_N_EN" id="C_N_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Adress</label>
+                          <input name="C_A_EN" id="C_A_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input name="C_E_EN" id="C_E_EN" class="form-control" placeholder="" type="email">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Phone Number</label>
+                          <input name="C_PN_EN" id="C_PN_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                   </div>
+               </article>
+             </div> <!-- card.// -->
+      	   </aside> <!-- col.// -->
+           <aside class="col-sm-4">
+                <div class="card" align='right'>
+                  <article class="card-body">
+                    <h4 class="card-title mb-4 mt-1">أضف عميل</h4>
+                       <div class="ClientAr" align='right'>
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA1" name="sameA1" onchange= "addressFunction()"/>
+                             <label>الإسم</label>
+                             <input name="C_N_AR" id="C_N_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA2" name="sameA2" onchange= "addressFunction()"/>
+                             <label>العنوان</label>
+                             <input name="C_A_AR" id="C_A_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA3" name="sameA3" onchange= "addressFunction()"/>
+                             <label>البريد الإلكتروني</label>
+                             <input name="C_E_AR" id="C_E_AR" class="form-control" placeholder="" type="email">
+                           </div> <!-- form-group// -->
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA4" name="sameA4" onchange= "addressFunction()"/>
+                             <label>رقم الهاتف</label>
+                             <input name="C_PN_AR" id="C_PN_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                      </div>
+                      </article>
+                </div> <!-- card.// -->
+           </aside> <!-- col.// -->
+      </div> <!-- row.// -->
+      <br><br>
+      <div>
+        <button type="submit" value="Post" class="btn btn-primary btn-block"  style="width:600px; margin:0 auto;" id="Add" name="Add"> Add  </button>
+      </div> <!-- form-group// -->
+      </div>  <!--container end.//-->
+      <br><br><br>
+      <div margin= 0 auto align="center" >
+        <table id="dt-material-checkbox" class="table table-striped" cellspacing="0" width="80%">
+
+
+          <thead>
+            <tr>
+              <th class="th-sm">IdCL</th>
+              <th class="th-sm">Nom_fr</th>
+              <th class="th-sm">Adresse_fr</th>
+              <th class="th-sm">Nom_an</th>
+              <th class="th-sm">Adresse_an</th>
+              <th class="th-sm">Nom_ar</th>
+              <th class="th-sm">Adresse_ar</th>
+              <th class="th-sm">Numero</th>
+              <th class="th-sm">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for indice in addClientPost %}
+            <tr>
+              <td>{{ indice.id_c_l}}</td>
+              <td>{{ indice.nom_fr}}</td>
+              <td>{{ indice.adresse_fr}}</td>
+              <td>{{ indice.nom_an}}</td>
+              <td>{{ indice.adresse_an}}</td>
+              <td>{{ indice.nom_ar}}</td>
+              <td>{{ indice.adresse_ar}}</td>
+              <td>{{ indice.numero}}</td>
+              <td>{{ indice.email}}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th class="th-sm">IdCL</th>
+              <th class="th-sm">Nom_fr</th>
+              <th class="th-sm">Adresse_fr</th>
+              <th class="th-sm">Nom_an</th>
+              <th class="th-sm">Adresse_an</th>
+              <th class="th-sm">Nom_ar</th>
+              <th class="th-sm">Adresse_ar</th>
+              <th class="th-sm">Numero</th>
+              <th class="th-sm">Email</th>
+            </tr>
+          </tfoot>
+          <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+          <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+          <script>
+            $('#dt-material-checkbox').dataTable({
+
+              columnDefs: [ {
+              orderable: false,
+              className: 'select-checkbox',
+              targets:   0
+          } ],
+          select: {
+              style:    'os',
+              selector: 'td:first-child'
+          },
+          order: [[ 1, 'asc' ]]
+          } );
+
+          </script>
+        </table>
+      </div>
+      <script>
+    function addressFunction()
+    {
+    if (document.getElementById('sameF1').checked){document.getElementById('C_N_FR').value=document.getElementById('C_N_EN').value;}
+    else{document.getElementById('C_N_FR').value="";}
+    if (document.getElementById('sameF2').checked){document.getElementById('C_A_FR').value=document.getElementById('C_A_EN').value;}
+    else{document.getElementById('C_A_FR').value="";}
+    if (document.getElementById('sameF3').checked){document.getElementById('C_E_FR').value=document.getElementById('C_E_EN').value;}
+    else{document.getElementById('C_E_FR').value="";}
+    if (document.getElementById('sameF4').checked){document.getElementById('C_PN_FR').value=document.getElementById('C_PN_EN').value;}
+    else{document.getElementById('C_PN_FR').value="";}
+    if (document.getElementById('sameA1').checked){document.getElementById('C_N_AR').value=document.getElementById('C_N_EN').value;}
+    else{document.getElementById('C_N_AR').value="";}
+    if (document.getElementById('sameA2').checked){document.getElementById('C_A_AR').value=document.getElementById('C_A_EN').value;}
+    else{document.getElementById('C_A_AR').value="";}
+    if (document.getElementById('sameA3').checked){document.getElementById('C_E_AR').value=document.getElementById('C_E_EN').value;}
+    else{document.getElementById('C_E_AR').value="";}
+    if (document.getElementById('sameA4').checked){document.getElementById('C_PN_AR').value=document.getElementById('C_PN_EN').value;}
+    else{document.getElementById('C_PN_AR').value="";}
+
+    }
+      </script>
+    {% endblock %}

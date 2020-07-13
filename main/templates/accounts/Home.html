@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block head %}
+    <title>Home</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% endblock %}
+
+    {% block body %}
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br><br><br><br>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<br><br>
+    <form  action="" method="post">
+      {% csrf_token %}
+
+    <div class="container" style="width:1000px;">
+      <div class="card">
+
+        <article class="card-body">
+
+    <div class="row-fluid">
+      <div style="width:200px;float:left;padding:0px;" >
+        <select class="selectpicker" id="selectpicker" data-show-subtext="true" data-live-search="true" name="ChoixProforma" data-width="480px"  title='Choisir une facture Pro forma'>
+          <optgroup label="Pro Forma">
+            {% for indice in FacturesProformaPost %}
+            <option data-subtext="code = {{indice.code}} date = {{indice.date}}">{{indice.id_f}}</option>
+            {% endfor %}
+          </optgroup>
+          </select>
+        </div>
+        <div style="width:130px;float:right;padding:0px 10px;">
+          <button class="btn btn-primary btn-block"  type="submit" name="buttonSuppPro" value="Post">Supprimer</button>
+        </div>
+      <div style="width:100px;float:right;padding:0px 10px;">
+        <button class="btn btn-primary btn-block"  type="submit" name="buttonAn" value="Post" >An</button>
+      </div>
+      <div style="width:100px;float:right;padding:0px 10px;">
+        <button class="btn btn-primary btn-block"  type="submit" name="buttonFr" value="Post">Fr</button>
+      </div>
+      <div style="width:100px;float:right;padding:0px 10px;">
+        <button class="btn btn-primary btn-block"  type="submit" name="buttonAr" value="Post">Ar</button>
+      </div>
+    </div>
+  </article>
+    </div>
+  </div>
+  <br>
+  <div class="container" style="width:1000px;">
+    <div class="card">
+
+      <article class="card-body">
+
+        <div class="row-fluid">
+          <div style="width:200px;float:left;padding:0px;" >
+            <select class="selectpicker" id="selectpicker" data-show-subtext="true" data-live-search="true" name="ChoixUNPA" data-width="480px"  title='Choisir une facture UNPA'>
+              <optgroup label="UNPA">
+                {% for indice in FacturesUnpaPost %}
+                <option data-subtext="code = {{indice.code}} date = {{indice.date}}">{{indice.id_f}}</option>
+                {% endfor %}
+              </optgroup>
+              </select>
+            </div>
+            <div style="width:130px;float:right;padding:0px 10px;">
+              <button class="btn btn-primary btn-block"  type="submit" name="buttonSuppUnpa" value="Post">Supprimer</button>
+            </div>
+          <div style="width:100px;float:right;padding:0px 10px;">
+            <button class="btn btn-primary btn-block"  type="submit" name="buttonAn" value="Post" >An</button>
+          </div>
+          <div style="width:100px;float:right;padding:0px 10px;">
+            <button class="btn btn-primary btn-block"  type="submit" name="buttonFr" value="Post">Fr</button>
+          </div>
+          <div style="width:100px;float:right;padding:0px 10px;">
+            <button class="btn btn-primary btn-block"  type="submit" name="buttonAr" value="Post">Ar</button>
+          </div>
+        </div>
+</article>
+  </div>
+</div>
+<br>
+<div class="container" style="width:1000px;">
+  <div class="card">
+
+    <article class="card-body">
+
+      <div class="row-fluid">
+        <div style="width:200px;float:left;padding:0px;" >
+          <select class="selectpicker" id="selectpicker" data-show-subtext="true" data-live-search="true" name="ChoixEdex" data-width="480px"  title='Choisir une facture EDEX'>
+            <optgroup label="EDEX">
+              {% for indice in FacturesEdexPost %}
+              <option data-subtext="code = {{indice.code}} date = {{indice.date}}">{{indice.id_f}}</option>
+              {% endfor %}
+            </optgroup>
+            </select>
+          </div>
+          <div style="width:130px;float:right;padding:0px 10px;">
+            <button class="btn btn-primary btn-block"  type="submit" name="buttonSuppEdex" value="Post">Supprimer</button>
+          </div>
+        <div style="width:100px;float:right;padding:0px 10px;">
+          <button class="btn btn-primary btn-block"  type="submit" name="buttonAn" value="Post" >An</button>
+        </div>
+        <div style="width:100px;float:right;padding:0px 10px;">
+          <button class="btn btn-primary btn-block"  type="submit" name="buttonFr" value="Post">Fr</button>
+        </div>
+        <div style="width:100px;float:right;padding:0px 10px;">
+          <button class="btn btn-primary btn-block"  type="submit" name="buttonAr" value="Post">Ar</button>
+        </div>
+      </div>
+</article>
+</div>
+</div>
+</form>
+    {% endblock %}

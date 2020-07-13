@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block head %}
+    <title>Invoice Register</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% endblock %}
+  {% block navbar %}
+  {% endblock %}
+
+    {% block body %}
+    <br>
+    <br>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <div class="container" style="width:900px; margin:0 auto;">
+    <form  action="" method="post" onsubmit="function()">
+      {% csrf_token %}
+        <aside class="col-sm-16">
+           <div class="card">
+             <article class="card-body">
+               <h4 class="card-title mb-4 mt-1">Passer une commande</h4>
+                <form class="input-append">
+                  {% csrf_token %}
+                    <div class="Client">
+                      <p>Choisir un type</p>
+                  <select class="selectpicker" data-width="820px" id="ChoixType" name="ChoixType" >
+                     <option >Pro forma</option>
+                     <option >UNPA</option>
+                     <option >EDEX</option>
+                   </select>
+                   </div>
+                   <br>
+                   <div class="form-group">
+                     <label>Taper le code de la facture</label>
+                     <input  class="form-control" placeholder="" type="number" id="IR_C" name="IR_C">
+                   </div> <!-- form-group// -->
+                    <div class="Client">
+                    <p>Choisir un client</p>
+                    <div class="form-group">
+                      <select class="selectpicker" data-width="820px" id="IR_IDC" name="IR_IDC">
+                        {% for indice in addClientPost %}
+                         <option data-subtext=" {{indice.nom_fr}}  {{indice.prenom_fr}}">{{ indice.id_c_l}}</option>
+                        {% endfor %}
+                       </select>
+                    </div> <!-- form-group// -->
+                 </div>
+                  <div class="Produit">
+                    <p>Ajouter des produits  </p>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
+<div class="container">
+
+ <div class="form-group row custom-upload">
+
+    <div class="col-md-12">
+	    <div data-role="appendRow">
+            <div class="form-inline form-row">
+                  <select id="LP_IP0" name="LP_IP0" class="selectpicker">
+                    {% for indice in addProductPost %}
+                    <option selected data-subtext="{{indice.designation_fr}}">{{indice.id_c_p}}</option>
+                    {% endfor %}
+                    </select>
+                  <label class="form-group col-md-1">Collis</label>
+                  <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-2" id="LP_C0" name="LP_C0" placeholder="....">
+                  <label class="form-group col-md-1">Poids</label>
+                  <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-2" id="LP_P0" name="LP_P0" placeholder="....">
+				          <button class="btn btn-sm btn-danger  mb-2" data-role="remove">
+				                <i class="fa fa-minus"></i>
+				          </button>
+				          <button class="btn btn-sm btn-primary  mb-2" data-role="add">
+				                <i class="fa fa-plus"></i>
+				          </button>
+            </div>  <!-- /div.form-inline -->
+        </div>  <!-- /div[data-role="dynamic-fields"] -->
+    </div>
+ </div>
+</div>
+<input type="hidden" id="inc" name="inc" value="">
+<input type="hidden" id="tot" name="tot" value="">
+<p>Prix Total</p>
+<script>
+  // Dynamically add-on fields
+  var tot=1;
+  var inc=1;
+  document.getElementById('inc').value =inc;
+  document.getElementById('tot').value =tot;
+
+  $(function() {
+
+      // Remove button click
+      $(document).on(
+          'click',
+          '[data-role="appendRow"] > .form-inline [data-role="remove"]',
+          function(e) {
+              tot--;
+              document.getElementById('tot').value =tot;
+              document.getElementById('inc').value =inc;
+              e.preventDefault();
+              $(this).closest('.form-row').remove();
+
+            }
+      );
+      // Add button click
+      $(document).on(
+          'click',
+          '[data-role="appendRow"] > .form-row [data-role="add"]',
+          function(e) {
+              e.preventDefault();
+              var container = $(this).closest('[data-role="appendRow"]');
+              new_field_group = container.children().filter('.form-row:first-child').clone();
+              document.getElementById('LP_P0').setAttribute("name","LP_P"+tot);
+              document.getElementById('LP_C0').setAttribute("name","LP_C"+tot);
+              document.getElementById('LP_IP0').setAttribute("name","LP_IP"+tot);
+
+              tot++;
+              inc++;
+              document.getElementById('tot').value =tot;
+              document.getElementById('inc').value =inc;
+
+              new_field_group.find('input').each(function(){
+                  $(this).val('');
+              });
+              container.append(new_field_group);
+          }
+      );
+
+  });
+
+</script>
+                <div class="container">
+                   <div class="form-group row custom-upload">
+                      <div class="col-md-12">
+                       <div data-role="appendRow">
+                              <div class="form-inline form-row">
+                                    <label class="form-group col-md-2">Francais :</label>
+                                    <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-9" id="IR_TPL_Fr" name="IR_TPL_Fr" placeholder="....">
+                              </div>  <!-- /div.form-inline -->
+                              <div class="form-inline form-row">
+                                    <label class="form-group col-md-2">Anglais :</label>
+                                    <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-9" id="IR_TPL_An" name="IR_TPL_An" placeholder="....">
+                              </div>  <!-- /div.form-inline -->
+                              <div class="form-inline form-row">
+                                    <label class="form-group col-md-2">Arabe :</label>
+                                    <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-9" id="IR_TPL_Ar" name="IR_TPL_Ar" placeholder="....">
+                              </div>  <!-- /div.form-inline -->
+                          </div>  <!-- /div[data-role="dynamic-fields"] -->
+                      </div>
+                   </div>
+                  </div>
+                   <div class="form-group">
+                     <label>Destination</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_D" name="IR_D">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Mode de Livraison</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_ML" name="IR_ML">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Port de chargement</label>
+                     <input class="form-control" placeholder="" type="text" id="IR_PC" name="IR_PC">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Pays d'origine</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_PO" name="IR_PO">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Nombre de conteneur</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_NCn" name="IR_NCn">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Poids Net</label>
+                     <input  class="form-control" placeholder="" type="number" step="0.001" min="0"  id="IR_PN" name="IR_PN">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Poids Brut</label>
+                     <input  class="form-control" placeholder="" type="number" step="0.001" min="0"  id="IR_PB" name="IR_PB">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>NGP</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_NGP" name="IR_NGP">
+                   </div> <!-- form-group// -->
+                   <div class="form-group">
+                     <label>Mode de Paiement</label>
+                     <input  class="form-control" placeholder="" type="text" id="IR_MP" name="IR_MP">
+                   </div> <!-- form-group// -->
+                </div>
+                <div class="Banque">
+                  <p>Coordonnées Bancaires</p>
+                  <select class="selectpicker" data-width="820px" id="IR_BA" name="IR_BA">
+                    {% for indice in addBankAccountPost %}
+                      <option data-subtext="{{indice.adresse_b_fr}}">{{indice.id_c_b}}</option>
+                    {% endfor %}
+                   </select>
+               </div>
+               <br>
+               <p>Options 1</p>
+               <div class="container">
+                <div class="form-group row custom-upload">
+                   <div class="col-md-12">
+               	    <div data-role="appendRow">
+                           <div class="form-inline form-row">
+                                 <label class="form-group col-md-2">Francais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Fr" name="OT_Fr" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Fr" name="OC_Fr" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Anglais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_An" name="OT_An" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_An" name="OC_An" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Arabe :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Ar" name="OT_Ar" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Ar" name="OC_Ar" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                       </div>  <!-- /div[data-role="dynamic-fields"] -->
+                   </div>
+                </div>
+               </div>
+               <p>Options 2</p>
+               <div class="container">
+                <div class="form-group row custom-upload">
+                   <div class="col-md-12">
+               	    <div data-role="appendRow">
+                           <div class="form-inline form-row">
+                                 <label class="form-group col-md-2">Francais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Fr_S" name="OT_Fr_S" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Fr_S" name="OC_Fr_S" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Anglais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_An_S" name="OT_An_S" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_An_S" name="OC_An_S" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Arabe :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Ar_S" name="OT_Ar_S" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Ar_S" name="OC_Ar_S" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                       </div>  <!-- /div[data-role="dynamic-fields"] -->
+                   </div>
+                </div>
+               </div>
+               <p>Options 3</p>
+               <div class="container">
+                <div class="form-group row custom-upload">
+                   <div class="col-md-12">
+                    <div data-role="appendRow">
+                           <div class="form-inline form-row">
+                                 <label class="form-group col-md-2">Francais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Fr_T" name="OT_Fr_T" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Fr_T" name="OC_Fr_T" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Anglais :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_An_T" name="OT_An_T" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_An_T" name="OC_An_T" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                           <div class="form-inline form-row">
+                                <label class="form-group col-md-2">Arabe :</label>
+                                 <label class="form-group col-md-1">Titre</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OT_Ar_T" name="OT_Ar_T" placeholder="....">
+                                 <label class="form-group col-md-2">Contenu</label>
+                                 <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-3" id="OC_Ar_T" name="OC_Ar_T" placeholder="....">
+                           </div>  <!-- /div.form-inline -->
+                       </div>  <!-- /div[data-role="dynamic-fields"] -->
+                   </div>
+                </div>
+               </div>
+
+
+
+
+
+               <br>
+               <div>
+                 <button type="submit" value="Post" class="btn btn-primary btn-block"> Passer la commande  </button>
+               </div> <!-- form-group// -->
+                </form>
+             </article>
+           </div> <!-- card.// -->
+</form>
+  </div>  <!--container end.//-->
+
+  <br><br><br>
+
+    {% endblock %}

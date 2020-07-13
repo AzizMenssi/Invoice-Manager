@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block head %}
+    <title>Add Bank Account</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% endblock %}
+    {% block body %}
+      <div class="container">
+      <br>
+      <br>
+      <form  action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <aside class="col-sm-4">
+            <div class="card">
+              <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Ajouter un compte bancaire</h4>
+                   <div class="BankFr">
+                       <div class="form-group">
+                         <label>Numero de compte</label>
+                         <input type="checkbox" id="sameF1" name="sameF1" onchange= "addressFunction()"/>
+                         <input name="B_AN_FR" id="B_AN_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                       <div class="form-group">
+                         <label>Adresse Bancaire</label>
+                         <input type="checkbox" id="sameF2" name="sameF2" onchange= "addressFunction()"/>
+                         <input name="B_BA_FR" id="B_BA_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                       <div class="form-group">
+                         <label>Code Swift</label>
+                         <input type="checkbox" id="sameF3" name="sameF3" onchange= "addressFunction()"/>
+                         <input name="B_CS_FR" id="B_CS_FR" class="form-control" placeholder="" type="text">
+                       </div> <!-- form-group// -->
+                  </div>
+              </article>
+            </div> <!-- card.// -->
+          </aside> <!-- col.// -->
+      	  <aside class="col-sm-4">
+             <div class="card">
+               <article class="card-body">
+                 <h4 class="card-title mb-4 mt-1">Add a bank account</h4>
+                    {% csrf_token %}
+                    <div class="BankAn">
+                        <div class="form-group">
+                          <label>Account Number</label>
+                          <input name="B_AN_EN" id="B_AN_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Bank Address</label>
+                          <input name="B_BA_EN" id="B_BA_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                          <label>Swift Code</label>
+                          <input name="B_CS_EN" id="B_CS_EN" class="form-control" placeholder="" type="text">
+                        </div> <!-- form-group// -->
+                     </div>
+               </article>
+             </div> <!-- card.// -->
+      	   </aside> <!-- col.// -->
+           <aside class="col-sm-4">
+                <div class="card" align='right'>
+                  <article class="card-body">
+                    <h4 class="card-title mb-4 mt-1">أضف حساب بنكي</h4>
+                       <div class="ClientAr" align='right'>
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA1" name="sameA1" onchange= "addressFunction()"/>
+                             <label>رقم الحساب</label>
+                             <input name="B_AN_AR" id="B_AN_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA2" name="sameA2" onchange= "addressFunction()"/>
+                             <label>عنوان المصرف</label>
+                             <input name="B_BA_AR" id="B_BA_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                           <div class="form-group">
+                             <input type="checkbox" id="sameA3" name="sameA3" onchange= "addressFunction()"/>
+                             <label>(Swift) رمز البنك</label>
+                             <input name="B_CS_AR" id="B_CS_AR" class="form-control" placeholder="" type="text">
+                           </div> <!-- form-group// -->
+                       </div>
+                  </article>
+                </div> <!-- card.// -->
+           </aside> <!-- col.// -->
+         </div> <!-- row.// -->
+          <br><br>
+         <div>
+           <button type="submit" value="Post" class="btn btn-primary btn-block"  style="width:600px; margin:0 auto;"> Add  </button>
+         </div> <!-- form-group// -->
+         </div>
+      <br><br><br>
+      <div margin= 0 auto align="center" >
+     <table id="dt-material-checkbox" class="table table-striped" cellspacing="0" width="80%">
+       <thead>
+         <tr>
+           <th class="th-sm">IdCB</th>
+           <th class="th-sm">NumB_fr</th>
+           <th class="th-sm">AdresseB_fr</th>
+           <th class="th-sm">CodeS_fr</th>
+           <th class="th-sm">NumB_an</th>
+           <th class="th-sm">AdresseB_an</th>
+           <th class="th-sm">CodeS_an</th>
+           <th class="th-sm">NumB_ar</th>
+           <th class="th-sm">AdresseB_ar</th>
+           <th class="th-sm">CodeS_ar</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% for indice in addBankAccountPost %}
+         <tr>
+           <td>{{ indice.id_c_b}}</td>
+           <td>{{ indice.num_b_fr}}</td>
+           <td>{{ indice.adresse_b_fr}}</td>
+           <td>{{ indice.code_s_fr}}</td>
+           <td>{{ indice.num_b_an}}</td>
+           <td>{{ indice.adresse_b_an}}</td>
+           <td>{{ indice.code_s_an}}</td>
+           <td>{{ indice.num_b_ar}}</td>
+           <td>{{ indice.adresse_b_ar}}</td>
+           <td>{{ indice.code_s_ar}}</td>
+         </tr>
+         {% endfor %}
+
+       </tbody>
+       <tfoot>
+         <tr>
+           <th class="th-sm">IdCB</th>
+           <th class="th-sm">NumB_fr</th>
+           <th class="th-sm">AdresseB_fr</th>
+           <th class="th-sm">CodeS_fr</th>
+           <th class="th-sm">NumB_an</th>
+           <th class="th-sm">AdresseB_an</th>
+           <th class="th-sm">CodeS_an</th>
+           <th class="th-sm">NumB_ar</th>
+           <th class="th-sm">AdresseB_ar</th>
+           <th class="th-sm">CodeS_ar</th>
+         </tr>
+       </tfoot>
+       <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+       <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+       <script>
+         $('#dt-material-checkbox').dataTable({
+
+           columnDefs: [ {
+           orderable: false,
+           className: 'select-checkbox',
+           targets:   0
+       } ],
+       select: {
+           style:    'os',
+           selector: 'td:first-child'
+       },
+       order: [[ 1, 'asc' ]]
+       } );
+
+       </script>
+     </table>
+      </div>
+      <script>
+    function addressFunction()
+    {
+    if (document.getElementById('sameF1').checked){document.getElementById('B_AN_FR').value=document.getElementById('B_AN_EN').value;}
+    else{document.getElementById('B_AN_FR').value="";}
+    if (document.getElementById('sameF2').checked){document.getElementById('B_BA_FR').value=document.getElementById('B_BA_EN').value;}
+    else{document.getElementById('B_BA_FR').value="";}
+    if (document.getElementById('sameF3').checked){document.getElementById('B_CS_FR').value=document.getElementById('B_CS_EN').value;}
+    else{document.getElementById('B_CS_FR').value="";}
+    if (document.getElementById('sameA1').checked){document.getElementById('B_AN_AR').value=document.getElementById('B_AN_EN').value;}
+    else{document.getElementById('B_AN_AR').value="";}
+    if (document.getElementById('sameA2').checked){document.getElementById('B_BA_AR').value=document.getElementById('B_BA_EN').value;}
+    else{document.getElementById('B_BA_AR').value="";}
+    if (document.getElementById('sameA3').checked){document.getElementById('B_CS_AR').value=document.getElementById('B_CS_EN').value;}
+    else{document.getElementById('B_CS_AR').value="";}
+    }
+      </script>
+    {% endblock %}
